@@ -85,9 +85,32 @@ ID_805 ID_805 1
    
 6) Gt.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension target_sample_size x number_of_snps (e.g. 200 x 100), of the target individuals. Note that the file has neither row nor column headings.
 
+### Output files
+#### When the outcome variable is quantitative
+**Command**
+```
+x <- iPRSue_estimates_QT(discovery_pheno = "Qpd.txt", target_pheno = "Qpt.txt",
+                                discovery_geno_mat = "Gd.txt", target_geno_mat = "Gt.txt", 
+                                no_of_PRSs = 500, significance_level = 0.05,
+                                seed = set.seed(1))
+```
+**Output**
+```
+     IID        PRS Variance Lower_Limit Upper_Limit
+1 ID_801 -0.4725073 2.485959   -3.487898    2.694049
+2 ID_802 -1.5362611 2.170396   -4.259216    1.285321
+3 ID_803 -1.5862195 2.101094   -4.226689    1.248356
+4 ID_804  0.3337120 2.538318   -3.138801    3.141503
+5 ID_805 -0.1487720 2.405106   -3.148455    2.707592
+6 ID_806 -0.1918785 2.611984   -3.290333    3.007862
+```
+Returns the dataframe ```x``` with following columns:
 
-
-
+* x$IID : Target individual IDs
+* x$PRS : PRS estimates of each target individual, computed using iPRSue method
+* x$Variance : Variance of individual PRS, computed using iPRSue method
+* x$Lower_Limit : Lower limit of the individual PRS confidence interval
+* x$Upper_Limit : Lower limit of the individual PRS confidence interval
 
 ## Contact
 dovini.jayasinghe@mymail.unisa.edu.au
