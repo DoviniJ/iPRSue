@@ -58,14 +58,14 @@ ID_805 ID_805 23.3025
 3) Bpd.txt - This is a .txt file which contains the following columns in order. The discovery dataset has 800 individuals. Note that the file has no column headings.
 * FID 
 * IID  
-* binary phenotype (1=controls, 2=cases) of the discovery sample
+* binary phenotype (0=controls, 1=cases) of the discovery sample
 
 ```
-ID_1 ID_1 1
-ID_2 ID_2 2
-ID_3 ID_3 1
-ID_4 ID_4 1
-ID_5 ID_5 1
+ID_1 ID_1 0
+ID_2 ID_2 1
+ID_3 ID_3 0
+ID_4 ID_4 0
+ID_5 ID_5 0
 ```
 
 4) Bpt.txt - This is a .txt file which contains the following columns in order. The target dataset has 200 individuals who are independent from the discovery dataset. Note that the file has no column headings.   
