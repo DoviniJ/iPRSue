@@ -30,8 +30,8 @@ library(iPRSue)
 ### Input files
 
 1) Qpd.txt - This is a .txt file which contains the following columns in order. The discovery dataset has 800 individuals. Note that the file has no column headings.
-* FID 
-* IID  
+* family ID (FID) 
+* individual ID (IID)  
 * quantitative phenotype of the discovery sample
 
 ```
