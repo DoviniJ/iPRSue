@@ -42,20 +42,7 @@ ID_4 ID_4 25.5271
 ID_5 ID_5 26.7165
 ```
 
-2) Qpt.txt - This is a .txt file which contains the following columns in order. The target dataset has 200 individuals who are independent from the discovery dataset. Note that the file has no column headings.   
-* FID 
-* IID  
-* quantitative phenotype of the target sample
-
-```
-ID_801 ID_801 26.5723
-ID_802 ID_802 20.2632
-ID_803 ID_803 27.7365
-ID_804 ID_804 18.75
-ID_805 ID_805 23.3025
-```
-
-3) Bpd.txt - This is a .txt file which contains the following columns in order. The discovery dataset has 800 individuals. Note that the file has no column headings.
+2) Bpd.txt - This is a .txt file which contains the following columns in order. The discovery dataset has 800 individuals. Note that the file has no column headings.
 * FID 
 * IID  
 * binary phenotype (0=controls, 1=cases) of the discovery sample
@@ -68,22 +55,9 @@ ID_4 ID_4 0
 ID_5 ID_5 0
 ```
 
-4) Bpt.txt - This is a .txt file which contains the following columns in order. The target dataset has 200 individuals who are independent from the discovery dataset. Note that the file has no column headings.   
-* FID 
-* IID  
-* binary phenotype (0=controls, 1=cases) of the target sample
-
-```
-ID_801 ID_801 0
-ID_802 ID_802 1
-ID_803 ID_803 0
-ID_804 ID_804 0
-ID_805 ID_805 1
-```
-
-5) Gd.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension discovery_sample_size x number_of_snps (e.g. 800 x 100), of the discovery individuals. Note that the file has neither row nor column headings.
+3) Gd.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension discovery_sample_size x number_of_snps (e.g. 800 x 100), of the discovery individuals. Note that the file has neither row nor column headings.
    
-6) Gt.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension target_sample_size x number_of_snps (e.g. 200 x 100), of the target individuals. Note that the file has neither row nor column headings.
+4) Gt.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension target_sample_size x number_of_snps (e.g. 200 x 100), of the target individuals. Note that the file has neither row nor column headings.
 
 
 
