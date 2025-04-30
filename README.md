@@ -168,8 +168,11 @@ Returns the dataframe ```y``` with following columns:
 * y$Upper_Limit : Lower limit of the individual PRS confidence interval
 
 ## $\color{red} {IMPORTANT}$
-We recommend producing GWAS summary statistics using scaled genotypes. If the users have access to readily-available GWAS summary statistics which are produced using unscaled genotypes, make sure to conduct necessary adjustments to SNP effects (beta) and corresponding standard errors (se), prior to applying ```iPRSue_estimates_QT()``` or ```iPRSue_estimates_BT()```. 
+We recommend producing GWAS summary statistics using scaled genotypes when applying iPRSue method. If the users have access to readily-available GWAS summary statistics which are produced using unscaled genotypes, make sure to conduct necessary adjustments to those SNP effects (beta) and corresponding standard errors (se), prior to applying ```iPRSue_estimates_QT()``` or ```iPRSue_estimates_BT()```. 
 
+The adjustment can be done using minor allele frequency (p) information as follows:
+* $beta_{adjusted} = beta \sqrt{(2p(1-p))}$
+* $se_{adjusted} = se \sqrt{(2p(1-p))}$
 
 ## Contact
 dovini.jayasinghe@mymail.unisa.edu.au
