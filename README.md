@@ -124,5 +124,45 @@ Returns the dataframe ```y``` with following columns:
 * y$Lower_Limit : Lower limit of the individual PRS confidence interval
 * y$Upper_Limit : Lower limit of the individual PRS confidence interval
 
+#### When the outcome variable is binary,
+**Commands**
+```
+x <- GWAS_BT(discovery_pheno = "Bpd.txt", discovery_geno_mat = "Gd.txt")
+y <- iPRSue_estimates_BT(gwas = x, target_pheno = "Bpt.txt", target_geno_mat = "Gt.txt", no_of_PRSs = 500, significance_level = 0.05, seed = set.seed(1))
+```
+The arguments of ```GWAS_BT()``` function, namely, ```discovery_pheno``` and ```discovery_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the discovery dataset. The function ```iPRSue_estimates()``` use the estimated values from ```GWAS_BT()``` function as an input to the argument ```gwas```. Moreover, ```target_pheno``` and ```target_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the target dataset. The no_of_PRSs specifies the size of the PRS distribution per target individual (default is 500), significance_level sets the level of significance for constructing PRS confidence intervals (default is 0.05), and seed is used to control random number generation for reproducibility (default is NULL).
+
+**Outputs**
+```
+         beta        se
+1  0.02351554 0.1734839
+2  0.19951530 0.1609413
+3  0.01422655 0.1742960
+4 -0.03176976 0.1777684
+5 -0.18495543 0.1921530
+6 -0.10750075 0.1847582
+```
+Returns the dataframe ```x``` with following columns:
+
+* x$beta : Additive effects of scaled SNP genotypes
+* x$se : Standard errors of the additive effects
+  
+```
+     IID       PRS Variance Lower_Limit Upper_Limit
+1 ID_801  2.876907 3.185277  -0.4678476   6.5059090
+2 ID_802  1.802006 2.769852  -1.3031663   4.9981202
+3 ID_803  2.431920 2.697261  -0.4885771   5.6501721
+4 ID_804 -2.524441 3.273875  -6.4328362   0.7284884
+5 ID_805  2.363432 3.063884  -1.1095964   5.6116642
+6 ID_806  1.497236 3.322266  -2.0080071   5.1538390
+```
+Returns the dataframe ```y``` with following columns:
+
+* y$IID : Target individual IDs
+* y$PRS : PRS estimates of each target individual, computed using iPRSue method
+* y$Variance : Variance of individual PRS, computed using iPRSue method
+* y$Lower_Limit : Lower limit of the individual PRS confidence interval
+* y$Upper_Limit : Lower limit of the individual PRS confidence interval
+
 ## Contact
 dovini.jayasinghe@mymail.unisa.edu.au
