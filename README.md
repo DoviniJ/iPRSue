@@ -172,7 +172,7 @@ $\color{red} {IMPORTANT}$
 We recommend producing GWAS summary statistics using scaled genotypes. If the users have access to readily-available GWAS summary statistics which are produced using unscaled genotypes, make sure to conduct necessary adjustments to SNP effects (beta) and corresponding standard errors (se), prior to applying ```iPRSue_estimates_QT()``` or ```iPRSue_estimates_BT()```. 
 
 This adjustment can be done using minor allele frequency (p) information as follows:
-* $beta_{adjusted} = beta . \sqrt(2p(1-p))$
+* $beta_{adjusted} = beta . \sqrt{(2p(1-p))}$
 * $se_{adjusted} = 1 / \sqrt{(2p(1-p))}$
 
 
