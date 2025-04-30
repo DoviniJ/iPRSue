@@ -89,6 +89,8 @@ ID_805 ID_805 1
 ```
 x <- iPRSue_estimates_QT(discovery_pheno = "Qpd.txt", target_pheno = "Qpt.txt", discovery_geno_mat = "Gd.txt", target_geno_mat = "Gt.txt", no_of_PRSs = 500, significance_level = 0.05, seed = set.seed(1))
 ```
+The argument discovery_pheno should be the phenotype file name for the individuals in the discovery dataset, while target_pheno should be the same of the target dataset. The discovery_geno_mat argument expects a text file name containing the scaled genotype matrix for the discovery individuals, and target_geno_mat is the corresponding text file of the target individuals. The no_of_PRSs specifies the size of the PRS distribution per target individual (default is 500), significance_level sets the level of significance for constructing PRS confidence intervals (default is 0.05), and seed is used to control random number generation for reproducibility (default is NULL).
+
 **Output**
 ```
      IID        PRS Variance Lower_Limit Upper_Limit
