@@ -20,14 +20,12 @@ Install iPRSue:
 ```
 devtools::install_github("DoviniJ/iPRSue")
 ```
-# Load the library
+## Load the library
 ```
 library(iPRSue)
 ```
-# Data preparation
 
-## File formats
-### Input files
+## Input files
 
 1) Qpd.txt - This is a .txt file which contains the following columns in order. The discovery dataset has 800 individuals. Note that the file has no column headings.
 * family ID (FID) 
@@ -85,7 +83,7 @@ ID_805 ID_805 1
    
 6) Gt.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension target_sample_size x number_of_snps (e.g. 200 x 100), of the target individuals. Note that the file has neither row nor column headings.
 
-### Output files
+## Output files
 #### When the outcome variable is quantitative
 **Command**
 ```
