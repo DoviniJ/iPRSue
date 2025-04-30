@@ -84,14 +84,31 @@ ID_805 ID_805 1
 6) Gt.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension target_sample_size x number_of_snps (e.g. 200 x 100), of the target individuals. Note that the file has neither row nor column headings.
 
 ## Output files
-#### When the outcome variable is quantitative
-**Command**
+#### When the outcome variable is quantitative,
+**Commands**
 ```
-x <- iPRSue_estimates_QT(discovery_pheno = "Qpd.txt", target_pheno = "Qpt.txt", discovery_geno_mat = "Gd.txt", target_geno_mat = "Gt.txt", no_of_PRSs = 500, significance_level = 0.05, seed = set.seed(1))
+x <- GWAS_QT(discovery_pheno = "Qpd.txt", discovery_geno_mat = "Gd.txt")
+y <- iPRSue_estimates_QT(gwas = x, target_pheno = "Qpt.txt", 
+                         target_geno_mat = "Gt.txt", 
+                         no_of_PRSs = 500, significance_level = 0.05, seed = set.seed(1))
 ```
-The argument discovery_pheno should be the phenotype file name for the individuals in the discovery dataset, while target_pheno should be the same of the target dataset. The discovery_geno_mat argument expects a text file name containing the scaled genotype matrix for the discovery individuals, and target_geno_mat is the corresponding text file of the target individuals. The no_of_PRSs specifies the size of the PRS distribution per target individual (default is 500), significance_level sets the level of significance for constructing PRS confidence intervals (default is 0.05), and seed is used to control random number generation for reproducibility (default is NULL).
+The arguments of ```GWAS_QT()``` function, namely, ```discovery_pheno``` and ```discovery_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the discovery dataset. The function ```iPRSue_estimates()``` use the estimated values from ```GWAS_QT()``` function as an input to the argument ```gwas```. Moreover, ```target_pheno``` and ```target_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the target dataset. The no_of_PRSs specifies the size of the PRS distribution per target individual (default is 500), significance_level sets the level of significance for constructing PRS confidence intervals (default is 0.05), and seed is used to control random number generation for reproducibility (default is NULL).
 
-**Output**
+**Outputs**
+```
+         beta        se
+1 -0.02527012 0.1590140
+2  0.05124793 0.1590062
+3 -0.10814317 0.1589704
+4 -0.09563745 0.1589805
+5  0.14676165 0.1589316
+6  0.08911614 0.1589852
+```
+Returns the dataframe ```x``` with following columns:
+
+* x$beta : Additive effects of scaled SNP genotypes
+* x$se : Standard errors of the additive effects
+  
 ```
      IID        PRS Variance Lower_Limit Upper_Limit
 1 ID_801 -0.4725073 2.485959   -3.487898    2.694049
@@ -101,13 +118,13 @@ The argument discovery_pheno should be the phenotype file name for the individua
 5 ID_805 -0.1487720 2.405106   -3.148455    2.707592
 6 ID_806 -0.1918785 2.611984   -3.290333    3.007862
 ```
-Returns the dataframe ```x``` with following columns:
+Returns the dataframe ```y``` with following columns:
 
-* x$IID : Target individual IDs
-* x$PRS : PRS estimates of each target individual, computed using iPRSue method
-* x$Variance : Variance of individual PRS, computed using iPRSue method
-* x$Lower_Limit : Lower limit of the individual PRS confidence interval
-* x$Upper_Limit : Lower limit of the individual PRS confidence interval
+* y$IID : Target individual IDs
+* y$PRS : PRS estimates of each target individual, computed using iPRSue method
+* y$Variance : Variance of individual PRS, computed using iPRSue method
+* y$Lower_Limit : Lower limit of the individual PRS confidence interval
+* y$Upper_Limit : Lower limit of the individual PRS confidence interval
 
 ## Contact
 dovini.jayasinghe@mymail.unisa.edu.au
