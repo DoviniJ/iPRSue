@@ -20,7 +20,7 @@ Install iPRSue:
 ```
 devtools::install_github("DoviniJ/iPRSue")
 ```
-## Load the library
+### Load the library
 ```
 library(iPRSue)
 ```
