@@ -88,9 +88,7 @@ ID_805 ID_805 1
 **Commands**
 ```
 x <- GWAS_QT(discovery_pheno = "Qpd.txt", discovery_geno_mat = "Gd.txt")
-y <- iPRSue_estimates_QT(gwas = x, target_pheno = "Qpt.txt", 
-                         target_geno_mat = "Gt.txt", 
-                         no_of_PRSs = 500, significance_level = 0.05, seed = set.seed(1))
+y <- iPRSue_estimates_QT(gwas = x, target_pheno = "Qpt.txt", target_geno_mat = "Gt.txt", no_of_PRSs = 500, significance_level = 0.05, seed = set.seed(1))
 ```
 The arguments of ```GWAS_QT()``` function, namely, ```discovery_pheno``` and ```discovery_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the discovery dataset. The function ```iPRSue_estimates()``` use the estimated values from ```GWAS_QT()``` function as an input to the argument ```gwas```. Moreover, ```target_pheno``` and ```target_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the target dataset. The no_of_PRSs specifies the size of the PRS distribution per target individual (default is 500), significance_level sets the level of significance for constructing PRS confidence intervals (default is 0.05), and seed is used to control random number generation for reproducibility (default is NULL).
 
