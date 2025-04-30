@@ -87,10 +87,7 @@ ID_805 ID_805 1
 #### When the outcome variable is quantitative
 **Command**
 ```
-x <- iPRSue_estimates_QT(discovery_pheno = "Qpd.txt", target_pheno = "Qpt.txt",
-                                discovery_geno_mat = "Gd.txt", target_geno_mat = "Gt.txt", 
-                                no_of_PRSs = 500, significance_level = 0.05,
-                                seed = set.seed(1))
+x <- iPRSue_estimates_QT(discovery_pheno = "Qpd.txt", target_pheno = "Qpt.txt", discovery_geno_mat = "Gd.txt", target_geno_mat = "Gt.txt", no_of_PRSs = 500, significance_level = 0.05, seed = set.seed(1))
 ```
 **Output**
 ```
