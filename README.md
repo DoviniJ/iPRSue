@@ -173,7 +173,7 @@ We recommend producing GWAS summary statistics using scaled genotypes. If the us
 
 This adjustment can be done using minor allele frequency (p) information as follows:
 * $beta_{adjusted} = beta . \sqrt(2p(1-p))$
-* $se_{adjusted} = 1 / \sqrt(2p(1-p))$
+* $se_{adjusted} = 1 / \sqrt{(2p(1-p))}$
 
 
 ## Contact
