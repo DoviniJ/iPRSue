@@ -83,6 +83,9 @@ ID_805 ID_805 1
    
 6) Gt.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension target_sample_size x number_of_snps (e.g. 200 x 100), of the target individuals. Note that the file has neither row nor column headings.
 
+## Quick start (tutorial)
+Download all the above example data files from inst folder to your working directory. Follow the commands below to obtain the expected outputs. Once practiced, you may use your own data files to generate individual PRS confidence intervals by using either the novel method iPRSue or the traditional method.
+
 ## Output files
 #### When the outcome variable is quantitative,
 **Commands**
@@ -163,6 +166,15 @@ Returns the dataframe ```y``` with following columns:
 * y$Variance : Variance of individual PRS, computed using iPRSue method
 * y$Lower_Limit : Lower limit of the individual PRS confidence interval
 * y$Upper_Limit : Lower limit of the individual PRS confidence interval
+
+$\color{red} {IMPORTANT}$
+
+We recommend producing GWAS summary statistics using scaled genotypes. If the users have access to readily-available GWAS summary statistics which are produced using unscaled genotypes, make sure to conduct necessary adjustments to SNP effects (beta) and corresponding standard errors (se), prior to applying ```iPRSue_estimates_QT()``` or ```iPRSue_estimates_BT()```. 
+
+This adjustment can be done using minor allele frequency (p) information as follows:
+* $beta_adjusted = beta x \sqrt(2p(1-p))$
+* $se_adjusted = 1 / \sqrt(2p(1-p))$
+
 
 ## Contact
 dovini.jayasinghe@mymail.unisa.edu.au
