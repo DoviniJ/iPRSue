@@ -127,6 +127,30 @@ Returns the dataframe ```y``` with following columns:
 * y$Lower_Limit : Lower limit of the individual PRS confidence interval
 * y$Upper_Limit : Lower limit of the individual PRS confidence interval
 
+**Command**
+```
+z <- traditional_estimates_QT(discovery_pheno = "Qpd.txt", discovery_geno_mat = "Gd.txt", target_pheno = "Qpt.txt", target_geno_mat = "Gt.txt", significance_level = 0.05)
+```
+The function ```traditional_estimates_QT()``` utilizes individual level data and provides PRS and uncertainty estimates using the traditional multiple linear regression approach. 
+
+**Output**
+```
+     IID          PRS Variance Lower_Limit Upper_Limit
+1 ID_801 -0.648970712 2.745048   -3.896275   2.5983340
+2 ID_802 -1.768934531 2.533312   -4.888488   1.3506189
+3 ID_803 -2.353748636 2.846413   -5.660466   0.9529688
+4 ID_804  0.619839276 2.797465   -2.658323   3.8980014
+5 ID_805 -0.004346983 3.081750   -3.445047   3.4363527
+6 ID_806 -1.090688079 3.007787   -4.489848   2.3084721
+```
+Returns the dataframe ```z``` with following columns:
+
+* y$IID : Target individual IDs
+* y$PRS : PRS estimates of each target individual, computed using traditional method
+* y$Variance : Variance of individual PRS, computed using traditional method
+* y$Lower_Limit : Lower limit of the individual PRS confidence interval
+* y$Upper_Limit : Lower limit of the individual PRS confidence interval
+  
 #### When the outcome variable is binary,
 **Commands**
 ```
@@ -166,6 +190,31 @@ Returns the dataframe ```y``` with following columns:
 * y$Variance : Variance of individual PRS, computed using iPRSue method
 * y$Lower_Limit : Lower limit of the individual PRS confidence interval
 * y$Upper_Limit : Lower limit of the individual PRS confidence interval
+
+**Command**
+```
+z <- traditional_estimates_BT(discovery_pheno = "Bpd.txt", discovery_geno_mat = "Gd.txt", target_pheno = "Bpt.txt", target_geno_mat = "Gt.txt", significance_level = 0.05)
+```
+The function ```traditional_estimates_BT()``` utilizes individual level data and provides PRS and uncertainty estimates using the traditional multiple logistic regression approach. 
+
+**Output**
+```
+     IID          PRS    Variance Lower_Limit Upper_Limit
+1 ID_801  0.109804054 0.005390178 -0.03409225   0.2537004
+2 ID_802  0.049484217 0.004974413 -0.08875110   0.1877195
+3 ID_803  0.158405386 0.005589220  0.01187636   0.3049344
+4 ID_804 -0.090352177 0.005493105 -0.23561585   0.0549115
+5 ID_805  0.070631058 0.006051326 -0.08183507   0.2230972
+6 ID_806  0.005974351 0.005906093 -0.14465105   0.1565998
+```
+Returns the dataframe ```z``` with following columns:
+
+* y$IID : Target individual IDs
+* y$PRS : PRS estimates of each target individual, computed using traditional method
+* y$Variance : Variance of individual PRS, computed using traditional method
+* y$Lower_Limit : Lower limit of the individual PRS confidence interval
+* y$Upper_Limit : Lower limit of the individual PRS confidence interval
+
 
 ## $\color{red} {IMPORTANT}$
 We recommend producing GWAS summary statistics using scaled genotypes when applying iPRSue method. If the users have access to readily-available GWAS summary statistics which are produced using unscaled genotypes, make sure to conduct necessary adjustments to those SNP effects (beta) and corresponding standard errors (se), prior to applying ```iPRSue_estimates_QT()``` or ```iPRSue_estimates_BT()```. 
