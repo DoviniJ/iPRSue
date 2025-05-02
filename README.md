@@ -220,8 +220,8 @@ Returns the dataframe ```z``` with following columns:
 We recommend producing GWAS summary statistics using scaled genotypes when applying iPRSue method. If the users have access to readily-available GWAS summary statistics which are produced using unscaled genotypes, make sure to conduct necessary adjustments to those SNP effects ($beta$) and corresponding standard errors ($se$), prior to applying ```iPRSue_estimates_QT()``` or ```iPRSue_estimates_BT()```. 
 
 The adjustment can be done using minor allele frequency ($p$) or effective number of individuals ($n$) information as follows:
-* $beta_{adjusted} = beta / (se . \sqrt{(2p(1-p))})$
-* $se_{adjusted} = 1 / \sqrt{(2p(1-p))}$
+* $beta_{adjusted} = beta / (se . \sqrt{2p(1-p)})$
+* $se_{adjusted} = 1 / \sqrt{2p(1-p)}$
 
 or
 * $beta_{adjusted} = beta / (se . \sqrt{n})$
@@ -230,7 +230,7 @@ or
   where n is the effective number of individuals (ref. 1).
 
 
-### Reference
+### References
 1) https://github.com/euffelmann/bpc
 
    
