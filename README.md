@@ -221,17 +221,18 @@ We recommend producing GWAS summary statistics using scaled genotypes when apply
 
 The adjustment can be done using minor allele frequency ($p$) or effective number of individuals ($n$) information as follows:
 * $beta_{adjusted} = beta . \sqrt{2p(1-p)}$
-* $se_{adjusted} = se . \sqrt{2p(1-p)}$ (check for references)
+* $se_{adjusted} = se . \sqrt{2p(1-p)}$ (ref. 1)
 
 or
 * $beta_{adjusted} = beta / (se . \sqrt{n})$
 * $se_{adjusted} = 1 / \sqrt{n}$
 
-  where n is the effective number of individuals (ref. 1).
+  where n is the effective number of individuals (ref. 2).
 
 
 ### References
-1) https://github.com/euffelmann/bpc
+1) Yang, J., Loos, R., Powell, J. et al. FTO genotype is associated with phenotypic variability of body mass index. Nature 490, 267–272 (2012). https://doi.org/10.1038/nature11401
+2) https://github.com/euffelmann/bpc
 
    
 ## Contact
