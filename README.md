@@ -195,7 +195,7 @@ Returns the dataframe ```y``` with following columns:
 ```
 z <- traditional_estimates_BT(discovery_pheno = "Bpd.txt", discovery_geno_mat = "Gd.txt", target_pheno = "Bpt.txt", target_geno_mat = "Gt.txt", significance_level = 0.05)
 ```
-The function ```traditional_estimates_BT()``` utilizes individual level data and provides PRS and uncertainty estimates using the traditional multiple logistic regression approach. 
+The function ```traditional_estimates_BT()``` utilizes individual level data and provides PRS and uncertainty estimates using the traditional multiple logistic regression approach with firth's bias correction. 
 
 **Output**
 ```
