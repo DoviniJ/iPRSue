@@ -1,0 +1,21 @@
+Package: iPRSue
+Title: Individual Polygenic Risk Score Uncertainty Estimation
+Version: 1.0.0
+Authors@R: c(person("Dovini", "Jayasinghe", role = c("aut", "cre", "cph"), email = "dovini.jayasinghe@mymail.unisa.edu.au"), person("Hong", "Lee", role = c("aut", "cph"), email = "hong.lee@unisa.edu.au"))
+Description: Provides tools for estimating uncertainty in individual polygenic risk scores (PRSs) 
+    using both simulation-based and analytical methods. These methods help quantify variability 
+    in PRS estimates for both binary and quantitative traits.
+URL: https://github.com/DoviniJ/iPRSue
+License: GPL-3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: 
+    R (>= 2.10)
+Imports:
+    data.table,
+    bigstatsr,
+    logistf,
+    stats
+LazyData: true
+
