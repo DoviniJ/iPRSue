@@ -1,4 +1,4 @@
-# iPRSue (repository in preparation)
+# iPRSue 
 ---
 
 Version: 1.0.0
