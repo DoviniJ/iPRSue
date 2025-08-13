@@ -7,7 +7,7 @@ Authors: Dovini Jayasinghe and S. Hong Lee
 
 ---
 
-The iPRSue is a novel method for estimating polygenic risk scores (PRSs) and their uncertainty (variance) using Genome Wide Association Studies (GWAS) summary statistics which can be constructed by ```GWAS_QT()``` or ```GWAS_BT()``` functions (see the section $\color{red} {IMPORTANT}$ for details). This method can be applied to both quantitative and binary traits through the functions ```iPRSue_estimates_QT()``` and ```iPRSue_estimates_BT()```, providing unbiased and precise estimates. In addition, we have incorporated a traditional approach for PRS and variance estimation, available for both trait types via ```traditional_estimates_QT()``` and ```traditional_estimates_BT()```. While the traditional method offers slightly but significantly higher prediction accuracy compared to iPRSue, it is limited to cases where the number of SNP genotypes is smaller than the discovery sample size. In contrast, iPRSue does not have this limitation and can be applied to any data dimension.
+The iPRSue is a novel method for estimating polygenic risk scores (PRSs) and their uncertainty (variance) using Genome Wide Association Studies (GWAS) summary statistics which can be constructed by ```GWAS_QT()``` or ```GWAS_BT()``` functions (see the section $\color{red} {IMPORTANT}$ for details). This method can be applied to both quantitative and binary traits through the functions ```iPRSue_estimates_QT()``` and ```iPRSue_estimates_BT()```, providing unbiased and precise estimates. In addition, we have incorporated traditionally used Best linear unbiased estimator (BLUE) method for PRS and variance estimation, available for both trait types via ```BLUE_estimates_QT()``` and ```BLUE_estimates_BT()```. While the BLUE method offers slightly but significantly higher prediction accuracy compared to iPRSue, it is limited to cases where the number of SNP genotypes is smaller than the discovery sample size. In contrast, iPRSue does not have this limitation and can be applied to any data dimension.
 
 
 ## GitHub installation
@@ -84,7 +84,7 @@ ID_805 ID_805 1
 6) Gt.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension target_sample_size x number_of_snps (e.g. 200 x 100), of the target individuals. Note that the file has neither row nor column headings.
 
 ## Quick start (tutorial)
-Download all the above example data files from inst folder to your working directory. Follow the commands below to obtain the expected outputs. Once practiced, you may use your own data files to generate individual PRS confidence intervals by using either the novel method iPRSue or the traditional method.
+Download all the above example data files from inst folder to your working directory. Follow the commands below to obtain the expected outputs. Once practiced, you may use your own data files to generate individual PRS confidence intervals by using either the novel method iPRSue or the BLUE method.
 
 ## Output files
 #### When the outcome variable is quantitative,
@@ -129,9 +129,9 @@ Returns the dataframe ```y``` with following columns:
 
 **Command**
 ```
-z <- traditional_estimates_QT(discovery_pheno = "Qpd.txt", discovery_geno_mat = "Gd.txt", target_pheno = "Qpt.txt", target_geno_mat = "Gt.txt", significance_level = 0.05)
+z <- BLUE_estimates_QT(discovery_pheno = "Qpd.txt", discovery_geno_mat = "Gd.txt", target_pheno = "Qpt.txt", target_geno_mat = "Gt.txt", significance_level = 0.05)
 ```
-The function ```traditional_estimates_QT()``` utilizes individual level data and provides PRS and uncertainty estimates using the traditional multiple linear regression approach. 
+The function ```BLUE_estimates_QT()``` utilizes individual level data and provides PRS and uncertainty estimates using the BLUE multiple linear regression approach. 
 
 **Output**
 ```
@@ -146,8 +146,8 @@ The function ```traditional_estimates_QT()``` utilizes individual level data and
 Returns the dataframe ```z``` with following columns:
 
 * y$IID : Target individual IDs
-* y$PRS : PRS estimates of each target individual, computed using traditional method
-* y$Variance : Variance of individual PRS, computed using traditional method
+* y$PRS : PRS estimates of each target individual, computed using BLUE method
+* y$Variance : Variance of individual PRS, computed using BLUE method
 * y$Lower_Limit : Lower limit of the individual PRS confidence interval
 * y$Upper_Limit : Lower limit of the individual PRS confidence interval
   
@@ -193,9 +193,9 @@ Returns the dataframe ```y``` with following columns:
 
 **Command**
 ```
-z <- traditional_estimates_BT(discovery_pheno = "Bpd.txt", discovery_geno_mat = "Gd.txt", target_pheno = "Bpt.txt", target_geno_mat = "Gt.txt", significance_level = 0.05, max_iterations = 100)
+z <- BLUE_estimates_BT(discovery_pheno = "Bpd.txt", discovery_geno_mat = "Gd.txt", target_pheno = "Bpt.txt", target_geno_mat = "Gt.txt", significance_level = 0.05, max_iterations = 100)
 ```
-The function ```traditional_estimates_BT()``` utilizes individual level data and provides PRS and uncertainty estimates using the traditional multiple logistic regression approach with firth's bias correction.  
+The function ```BLUE_estimates_BT()``` utilizes individual level data and provides PRS and uncertainty estimates using the BLUE multiple logistic regression approach with firth's bias correction.  
 
 **Output**
 ```
@@ -211,8 +211,8 @@ The function ```traditional_estimates_BT()``` utilizes individual level data and
 Returns the dataframe ```z``` with following columns:
 
 * y$IID : Target individual IDs
-* y$PRS : PRS estimates of each target individual, computed using traditional method
-* y$Variance : Variance of individual PRS, computed using traditional method
+* y$PRS : PRS estimates of each target individual, computed using BLUE method
+* y$Variance : Variance of individual PRS, computed using BLUE method
 * y$Lower_Limit : Lower limit of the individual PRS confidence interval
 * y$Upper_Limit : Lower limit of the individual PRS confidence interval
 
