@@ -50,18 +50,25 @@ Confidence intervals are then calculated using the specified significance level.
 This function is designed for binary traits and should be used with GWAS summary statistics obtained from logistic regression.
 }
 \examples{
-\dontrun{
-# Step 1: Run GWAS on binary trait
-gwas_res <- GWAS_BT("Bpd.txt", "Gd.txt")
+\donttest{
+  bpd <- system.file("Bpd.txt", package = "iPRSue", mustWork = TRUE)
+  bpt <- system.file("Bpt.txt", package = "iPRSue", mustWork = TRUE)
+  gd  <- system.file("Gd.txt",  package = "iPRSue", mustWork = TRUE)
+  gt  <- system.file("Gt.txt",  package = "iPRSue", mustWork = TRUE)
 
-# Step 2: Estimate individual PRS with uncertainty
-prs_estimates <- iPRSue_estimates_BT(gwas = gwas_res,
-                                     target_pheno = "Bpt.txt",
-                                     target_geno_mat = "Gt.txt",
-                                     no_of_PRSs = 500,
-                                     significance_level = 0.05,
-                                     seed = 123)
-head(prs_estimates)
+  # Step 1: Run GWAS on binary trait
+  gwas_res <- GWAS_BT(discovery_pheno = bpd, discovery_geno_mat = gd)
+
+  # Step 2: Estimate individual PRS with uncertainty
+  prs_estimates <- iPRSue_estimates_BT(
+    gwas              = gwas_res,
+    target_pheno      = bpt,
+    target_geno_mat   = gt,
+    no_of_PRSs        = 500,
+    significance_level = 0.05,
+    seed              = 123
+  )
+  head(prs_estimates)
 }
 
 }

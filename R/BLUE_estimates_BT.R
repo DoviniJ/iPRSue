@@ -34,14 +34,21 @@
 #' @importFrom stats binomial coef glm lm qnorm quantile rnorm var vcov
 #' 
 #' @examples
-#' \dontrun{
-#' results <- BLUE_estimates_BT(discovery_pheno = "Bpd.txt",
-#'                                     discovery_geno_mat = "Gd.txt",
-#'                                     target_pheno = "Bpt.txt",
-#'                                     target_geno_mat = "Gt.txt",
-#'                                     significance_level = 0.05,
-#'                                     max_iterations = 100)
-#' head(results)
+#' \donttest{
+#'   bpd <- system.file("Bpd.txt", package = "iPRSue", mustWork = TRUE)
+#'   bpt <- system.file("Bpt.txt", package = "iPRSue", mustWork = TRUE)
+#'   gd  <- system.file("Gd.txt",  package = "iPRSue", mustWork = TRUE)
+#'   gt  <- system.file("Gt.txt",  package = "iPRSue", mustWork = TRUE)
+#'
+#'   results <- BLUE_estimates_BT(
+#'     discovery_pheno    = bpd,
+#'     discovery_geno_mat = gd,
+#'     target_pheno       = bpt,
+#'     target_geno_mat    = gt,
+#'     significance_level = 0.05,
+#'     max_iterations     = 100
+#'   )
+#'   head(results)
 #' }
 #'
 #' @export

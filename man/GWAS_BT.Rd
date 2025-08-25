@@ -26,12 +26,19 @@ It reads a phenotype file and a genotype matrix, and estimates the SNP effect si
 The function uses logistic regression (\code{glm} with \code{binomial(link="logit")}) to regress the binary phenotype on each SNP individually. The output includes only the regression coefficient and standard error for each SNP.
 }
 \examples{
-\dontrun{
-# Phenotype file: 3rd column must contain binary outcome (0/1)
-# Genotype file: SNPs in columns, rows correspond to individuals
-# Run GWAS on a binary trait with discovery phenotype and genotype files
-gwas_results <- GWAS_BT(discovery_pheno = "Bpd.txt", discovery_geno_mat = "Gd.txt")
-head(gwas_results)
+\donttest{
+  # Phenotype file: 3rd column must contain binary outcome (0/1)
+  # Genotype file: SNPs in columns, rows correspond to individuals
+  # Run GWAS on a binary trait with discovery phenotype and genotype files
+
+  bpd <- system.file("Bpd.txt", package = "iPRSue", mustWork = TRUE)
+  gd  <- system.file("Gd.txt",  package = "iPRSue", mustWork = TRUE)
+
+  gwas_results <- GWAS_BT(
+    discovery_pheno    = bpd,
+    discovery_geno_mat = gd
+  )
+  head(gwas_results)
 }
 
 }

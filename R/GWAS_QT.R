@@ -24,12 +24,19 @@
 #' @importFrom stats binomial coef glm lm qnorm quantile rnorm var vcov
 #' 
 #' @examples
-#' \dontrun{
-#' # Example usage:
-#' # Phenotype file: 3rd column must contain a continuous outcome
-#' # Genotype file: SNPs in columns, rows correspond to individuals
-#' results <- GWAS_QT(discovery_pheno = "Qpd.txt", discovery_geno_mat = "Gd.txt")
-#' head(results)
+#' \donttest{
+#'   # Example usage:
+#'   # Phenotype file: 3rd column must contain a continuous outcome
+#'   # Genotype file: SNPs in columns, rows correspond to individuals
+#'
+#'   qpd <- system.file("Qpd.txt", package = "iPRSue", mustWork = TRUE)
+#'   gd  <- system.file("Gd.txt",  package = "iPRSue", mustWork = TRUE)
+#'
+#'   results <- GWAS_QT(
+#'     discovery_pheno    = qpd,
+#'     discovery_geno_mat = gd
+#'   )
+#'   head(results)
 #' }
 #'
 #' @export
