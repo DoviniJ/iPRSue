@@ -1,4 +1,4 @@
-# iPRSue (Page in preparation - please use CRAN)
+# iPRSue (Page under construction - please use CRAN)
 ---
 
 Version: xxx
