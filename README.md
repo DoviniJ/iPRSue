@@ -1,7 +1,7 @@
-# iPRSue 
+# iPRSue (Page in preparation - please use CRAN)
 ---
 
-Version: 1.0.0
+Version: xxx
 
 Authors: Dovini Jayasinghe and S. Hong Lee
 
@@ -9,8 +9,16 @@ Authors: Dovini Jayasinghe and S. Hong Lee
 
 The iPRSue is a novel method for estimating polygenic risk scores (PRSs) and their uncertainty (variance) using Genome Wide Association Studies (GWAS) summary statistics which can be constructed by ```GWAS_QT()``` or ```GWAS_BT()``` functions (see the section $\color{red} {IMPORTANT}$ for details). This method can be applied to both quantitative and binary traits through the functions ```iPRSue_estimates_QT()``` and ```iPRSue_estimates_BT()```, providing unbiased and precise estimates. In addition, we have incorporated traditionally used Best linear unbiased estimator (BLUE) method for PRS and variance estimation, available for both trait types via ```BLUE_estimates_QT()``` and ```BLUE_estimates_BT()```. While the BLUE method offers slightly but significantly higher prediction accuracy compared to iPRSue, it is limited to cases where the number of SNP genotypes is smaller than the discovery sample size. In contrast, iPRSue does not have this limitation and can be applied to any data dimension.
 
+## Package Installation:
 
-## GitHub installation
+### CRAN 
+
+```
+install.packages("iPRSue")
+```
+### or
+
+### GitHub 
 
 Install devtools:
 ```
@@ -20,7 +28,7 @@ Install iPRSue:
 ```
 devtools::install_github("DoviniJ/iPRSue")
 ```
-### Load the library
+## Load the library:
 ```
 library(iPRSue)
 ```
