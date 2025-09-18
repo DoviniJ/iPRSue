@@ -136,9 +136,9 @@ ID_4 ID_4 1
 ID_5 ID_5 1
 ```  
 
-7) Gd.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension discovery_sample_size x number_of_snps (e.g. 800 x 1,000), of the discovery individuals. Note that the file has neither row nor column headings.
+7) Gd.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension discovery_sample_size x number_of_snps (e.g. 800 x 1,000), of the discovery individuals. Note that the file has neither row nor column headings. (Note: Gd_reduced.txt file contains discovery genotype information for 5 SNPs and is generated to support BLUE estimates where number of individuals cannot be less than number of SNPs)
    
-8) Gt.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension target_sample_size x number_of_snps (e.g. 200 x 1,000), of the target individuals. Note that the file has neither row nor column headings.
+8) Gt.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension target_sample_size x number_of_snps (e.g. 200 x 1,000), of the target individuals. Note that the file has neither row nor column headings. (Note: Gt_reduced.txt file contains target genotype information for 5 SNPs and is generated to support BLUE estimates where number of individuals cannot be less than number of SNPs)
 
 9) mydata.fam - This is a file associated with the PLINK binary format file which contains the following columns in order. The example dataset has 1,000 individuals. Note that the file has no column headings. This follows the PLINK .fam file format.
 * family ID (FID) 
@@ -241,19 +241,19 @@ Returns the dataframe ```y``` with following columns:
 
 **Command**
 ```
-z <- BLUE_estimates_QT(discovery_pheno = "Qpd.txt", discovery_geno_mat = "Gd.txt", target_pheno = "Qpt.txt", target_geno_mat = "Gt.txt", significance_level = 0.05)
+z <- BLUE_estimates_QT(discovery_pheno = "Qpd.txt", discovery_geno_mat = "Gd_reduced.txt", target_pheno = "Qpt.txt", target_geno_mat = "Gt_reduced.txt", significance_level = 0.05)
 ```
-The function ```BLUE_estimates_QT()``` utilizes individual level data and provides PRS and uncertainty estimates using the BLUE multiple linear regression approach. 
+In ```BLUE_estimates_QT()```, ```discovery_pheno``` is the file containing scaled quantitative phenotypes for the discovery sample, and ```discovery_geno_mat``` is a text file with the corresponding scaled discovery genotype matrix. The ```target_pheno``` argument provides the target sample’s quantitative phenotypes, while ```target_geno_mat``` supplies the scaled target genotype matrix. The discovery and target genotype matrices must refer to the same SNP subset in the same column order, and sample IDs must align with their respective phenotype files. The ```significance_level``` sets the alpha for confidence intervals (e.g., 0.05 for 95% CIs). The function fits a BLUE multiple linear regression on the discovery data to estimate SNP effects, then applies those effects to the target genotypes to compute per-individual PRS along with uncertainty metrics (standard errors and confidence intervals) under the usual linear-model assumptions. 
 
 **Output**
 ```
-     IID           PRS  Variance Lower_Limit Upper_Limit
-1 ID_801 -0.1444712318 0.1360387  -0.8673731   0.5784306
-2 ID_802 -0.3937930417 0.1255455  -1.0882554   0.3006693
-3 ID_803 -0.5239819895 0.1410622  -1.2601100   0.2121460
-4 ID_804  0.1379861095 0.1386364  -0.5917851   0.8677573
-5 ID_805 -0.0009677077 0.1527249  -0.7669223   0.7649869
-6 ID_806 -0.2428045632 0.1490595  -0.9995118   0.5139027
+     IID         PRS    Variance Lower_Limit Upper_Limit
+1 ID_801  0.08620601 0.002480396 -0.01140720   0.1838192
+2 ID_802  0.03582957 0.029809734 -0.30256793   0.3742271
+3 ID_803  0.06101779 0.007735024 -0.11135906   0.2333946
+4 ID_804 -0.08975104 0.129695600 -0.79559826   0.6160962
+5 ID_805  0.08620601 0.002480396 -0.01140720   0.1838192
+6 ID_806  0.04970188 0.004847807 -0.08676296   0.1861667
 ```
 Returns the dataframe ```z``` with following columns:
 
