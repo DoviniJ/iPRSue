@@ -266,7 +266,7 @@ Returns the dataframe ```z``` with following columns:
 #### When the outcome variable is binary,
 **Commands**
 ```
-x <- GWAS_BT(discovery_pheno = "Bpd.txt", discovery_geno_mat = "Gd.txt")
+x <- GWAS_BT(plink_path = "plink2", b_file = "mydata", discovery_pheno = "Bpd.txt", discovery_cov = "cd.txt", thread = 48)
 y <- iPRSue_estimates_BT(gwas = x, target_pheno = "Bpt.txt", target_geno_mat = "Gt.txt", no_of_PRSs = 500, significance_level = 0.05, seed = set.seed(1))
 ```
 The arguments of ```GWAS_BT()``` function, namely, ```discovery_pheno``` and ```discovery_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the discovery dataset. The function ```iPRSue_estimates()``` use the estimated values from ```GWAS_BT()``` function as an input to the argument ```gwas```. Moreover, ```target_pheno``` and ```target_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the target dataset. The no_of_PRSs specifies the size of the PRS distribution per target individual (default is 500), significance_level sets the level of significance for constructing PRS confidence intervals (default is 0.05), and seed is used to control random number generation for reproducibility (default is NULL).
@@ -274,12 +274,12 @@ The arguments of ```GWAS_BT()``` function, namely, ```discovery_pheno``` and ```
 **Outputs**
 ```
          beta        se
-1  0.02351554 0.1734839
-2  0.19951530 0.1609413
-3  0.01422655 0.1742960
-4 -0.03176976 0.1777684
-5 -0.18495543 0.1921530
-6 -0.10750075 0.1847582
+1  0.01128249 0.1828907
+2  0.36766352 0.1820150
+3  0.03322998 0.1599603
+4  0.13476046 0.1486067
+5 -0.08688650 0.1981246
+6 -0.38928581 0.2070150
 ```
 Returns the dataframe ```x``` with following columns:
 
@@ -287,13 +287,13 @@ Returns the dataframe ```x``` with following columns:
 * x$se : Standard errors of the additive effects
   
 ```
-     IID       PRS Variance Lower_Limit Upper_Limit
-1 ID_801  2.876907 3.185277  -0.4678476   6.5059090
-2 ID_802  1.802006 2.769852  -1.3031663   4.9981202
-3 ID_803  2.431920 2.697261  -0.4885771   5.6501721
-4 ID_804 -2.524441 3.273875  -6.4328362   0.7284884
-5 ID_805  2.363432 3.063884  -1.1095964   5.6116642
-6 ID_806  1.497236 3.322266  -2.0080071   5.1538390
+     IID        PRS Variance Lower_Limit Upper_Limit
+1 ID_801   4.146077 36.03383  -7.8230214  15.0955206
+2 ID_802  -4.176091 35.71329 -16.4947165   6.9894897
+3 ID_803  11.533248 39.03824  -0.3957665  23.5524960
+4 ID_804  -3.503107 43.23646 -16.4752543   9.6227589
+5 ID_805 -13.343637 40.25580 -25.1031448  -0.6833604
+6 ID_806   6.039555 36.87239  -5.7316201  18.1581323
 ```
 Returns the dataframe ```y``` with following columns:
 
@@ -305,19 +305,19 @@ Returns the dataframe ```y``` with following columns:
 
 **Command**
 ```
-z <- BLUE_estimates_BT(discovery_pheno = "Bpd.txt", discovery_geno_mat = "Gd.txt", target_pheno = "Bpt.txt", target_geno_mat = "Gt.txt", significance_level = 0.05, max_iterations = 100)
+z <- BLUE_estimates_BT(discovery_pheno = "Bpd_0_1.txt", discovery_geno_mat = "Gd_reduced.txt", target_pheno = "Bpt.txt", target_geno_mat = "Gt_reduced.txt", significance_level = 0.05, max_iterations = 100)
 ```
-The function ```BLUE_estimates_BT()``` utilizes individual level data and provides PRS and uncertainty estimates using the BLUE multiple logistic regression approach with firth's bias correction.  
+In ```BLUE_estimates_BT()```, ```discovery_pheno``` is the discovery sample’s binary phenotype file coded 0/1, and ```discovery_geno_mat``` is a text file containing the corresponding scaled discovery genotype matrix. The ```target_pheno``` argument supplies the target sample’s binary phenotypes, while ```target_geno_mat``` provides the scaled target genotype matrix. Discovery and target genotype matrices must reference the same SNP subset in identical column order, and sample IDs must align with their respective phenotype files. The ```significance_level``` sets the alpha for confidence intervals (e.g., 0.05 for 95% CIs), and ```max_iterations``` controls the cap on optimization steps for the Firth-corrected logistic fit. The function fits a BLUE multiple logistic regression with Firth’s bias correction on the discovery data to obtain SNP effects, then applies those effects to the target genotypes to compute per-individual PRS along with uncertainty metrics.
 
 **Output**
 ```
-     IID       PRS Variance Lower_Limit Upper_Limit
-1 ID_801  2.701390 2.194493  -0.2020660   5.6048453
-2 ID_802 -1.192601 2.048303  -3.9976810   1.6124780
-3 ID_803  3.872388 2.347984   0.8691089   6.8756664
-4 ID_804 -3.218260 2.365584  -6.2327734  -0.2037462
-5 ID_805  2.755695 2.486593  -0.3349594   5.8463492
-6 ID_806  1.973755 2.089906  -0.8596682   4.8071788
+     IID         PRS   Variance Lower_Limit  Upper_Limit
+1 ID_801 -0.46466860 0.05424898  -0.9211719 -0.008165357
+2 ID_802 -0.67096196 0.78880018  -2.4116927  1.069768757
+3 ID_803 -0.56781528 0.19833426  -1.4406800  0.305049490
+4 ID_804  1.06695650 2.35839577  -1.9429738  4.076886769
+5 ID_805 -0.46466860 0.05424898  -0.9211719 -0.008165357
+6 ID_806  0.04296879 0.10720391  -0.5987628  0.684700358
 
 ```
 Returns the dataframe ```z``` with following columns:
