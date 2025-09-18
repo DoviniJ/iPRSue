@@ -4,12 +4,21 @@
 \alias{GWAS_BT}
 \title{GWAS_BT function}
 \usage{
-GWAS_BT(discovery_pheno, discovery_geno_mat)
+GWAS_BT(plink_path, b_file, discovery_pheno, discovery_cov, thread = 20)
 }
 \arguments{
-\item{discovery_pheno}{A character string specifying the path to the phenotype file. The file should have no header and contain individual IDs, and the third column should contain the binary trait (0/1).}
+\item{plink_path}{Path to the PLINK executable application}
 
-\item{discovery_geno_mat}{A character string specifying the path to the genotype matrix file. The file should have no header and contain numeric genotype data (e.g., 0, 1, 2) for each SNP.}
+\item{b_file}{Prefix of the binary files, where all .fam, .bed and .bim files have a common prefix}
+
+\item{discovery_pheno}{Name (with file extension) of the phenotype file containing family ID, individual
+ID and phenotype of the discovery dataset as columns, without heading}
+
+\item{discovery_cov}{Name (with file extension) of the covariate file containing family ID, individual
+ID, and covariate(s) of the discovery dataset as columns, without heading. If no covariate is
+used, have a constant column (e.g. vector of 1s)}
+
+\item{thread}{Number of threads used (default = 20)}
 }
 \value{
 A data frame with two columns:
@@ -19,24 +28,24 @@ A data frame with two columns:
 }
 }
 \description{
-Performs genome-wide association analysis for a binary trait using logistic regression.
-It reads a phenotype file and a genotype matrix, and estimates the SNP effect sizes and standard errors.
+Performs genome-wide association study (GWAS) using plink2 logistic model and outputs
+the GWAS summary statistics with additive SNP effects (beta) and
+standard errors (se)
 }
 \details{
-The function uses logistic regression (\code{glm} with \code{binomial(link="logit")}) to regress the binary phenotype on each SNP individually. The output includes only the regression coefficient and standard error for each SNP.
+The function uses logistic regression to regress the binary phenotype (1/2 coding for controls/cases)
+on each SNP separately using plink 2. Then the estimated effects and standard errors are adjusted
+for standardization. It is optional to employ covariates in the model. If no covariate is used,
+create your covariate file with a constant in the 3rd column (e.g. vector of 1s).
 }
 \examples{
-\donttest{
-  # Phenotype file: 3rd column must contain binary outcome (0/1)
-  # Genotype file: SNPs in columns, rows correspond to individuals
-  # Run GWAS on a binary trait with discovery phenotype and genotype files
-
-  bpd <- system.file("Bpd.txt", package = "iPRSue", mustWork = TRUE)
-  gd  <- system.file("Gd.txt",  package = "iPRSue", mustWork = TRUE)
-
-  gwas_results <- GWAS_BT(
-    discovery_pheno    = bpd,
-    discovery_geno_mat = gd
+\dontrun{
+  results <- GWAS_BT(
+    plink_path = "./plink2",
+    b_file = "./binary_file_prefix",
+    discovery_pheno = "./discovery_phenotype_file",
+    discovery_cov = "./discovery_covariate_file",
+    thread = 48
   )
   head(gwas_results)
 }

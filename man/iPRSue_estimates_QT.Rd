@@ -50,19 +50,22 @@ Confidence intervals are then calculated using the specified significance level.
 This function is designed for quantitative traits and should be used with GWAS summary statistics obtained from linear regression.
 }
 \examples{
-\donttest{
-  qpd <- system.file("Qpd.txt", package = "iPRSue", mustWork = TRUE)
-  qpt <- system.file("Qpt.txt", package = "iPRSue", mustWork = TRUE)
-  gd  <- system.file("Gd.txt",  package = "iPRSue", mustWork = TRUE)
-  gt  <- system.file("Gt.txt",  package = "iPRSue", mustWork = TRUE)
-
+\dontrun{
   # Step 1: Run GWAS on quantitative trait
-  gwas_res <- GWAS_QT(discovery_pheno = qpd,
-                      discovery_geno_mat = gd)
-
+  results <- GWAS_QT(
+    plink_path = "./plink2",
+    b_file = "./binary_file_prefix",
+    discovery_pheno = "./discovery_phenotype_file",
+    discovery_cov = "./discovery_covariate_file",
+    thread = 48
+  )
+  
   # Step 2: Estimate individual PRS with uncertainty
+  qpt <- system.file("Qpt.txt", package = "iPRSue", mustWork = TRUE)
+  gt  <- system.file("Gt.txt",  package = "iPRSue", mustWork = TRUE)
+  
   prs_estimates <- iPRSue_estimates_QT(
-    gwas              = gwas_res,
+    gwas              = results,
     target_pheno      = qpt,
     target_geno_mat   = gt,
     no_of_PRSs        = 500,

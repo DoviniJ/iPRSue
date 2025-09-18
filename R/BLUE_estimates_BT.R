@@ -34,8 +34,7 @@
 #' @importFrom stats binomial coef glm lm qnorm quantile rnorm var vcov
 #' 
 #' @examples
-#' \donttest{
-#'   bpd <- system.file("Bpd.txt", package = "iPRSue", mustWork = TRUE)
+#'   bpd <- system.file("Bpd_0_1.txt", package = "iPRSue", mustWork = TRUE)
 #'   bpt <- system.file("Bpt.txt", package = "iPRSue", mustWork = TRUE)
 #'   gd  <- system.file("Gd.txt",  package = "iPRSue", mustWork = TRUE)
 #'   gt  <- system.file("Gt.txt",  package = "iPRSue", mustWork = TRUE)
@@ -49,7 +48,6 @@
 #'     max_iterations     = 100
 #'   )
 #'   head(results)
-#' }
 #'
 #' @export
 BLUE_estimates_BT <- function(discovery_pheno, 

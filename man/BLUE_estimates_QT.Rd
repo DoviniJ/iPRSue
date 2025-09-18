@@ -46,12 +46,11 @@ Confidence intervals are constructed using the normal approximation.
 Missing or non-estimable coefficients and variances are set to zero.
 }
 \examples{
-\donttest{
   qpd <- system.file("Qpd.txt", package = "iPRSue", mustWork = TRUE)
   qpt <- system.file("Qpt.txt", package = "iPRSue", mustWork = TRUE)
   gd  <- system.file("Gd.txt",  package = "iPRSue", mustWork = TRUE)
   gt  <- system.file("Gt.txt",  package = "iPRSue", mustWork = TRUE)
-
+ 
   results <- BLUE_estimates_QT(
     discovery_pheno    = qpd,
     discovery_geno_mat = gd,
@@ -60,6 +59,5 @@ Missing or non-estimable coefficients and variances are set to zero.
     significance_level = 0.05
   )
   head(results)
-}
 
 }

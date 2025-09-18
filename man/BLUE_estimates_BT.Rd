@@ -49,8 +49,7 @@ PRS in the target dataset via the delta method. Confidence intervals are derived
 Missing or non-estimable coefficients and variances are set to zero.
 }
 \examples{
-\donttest{
-  bpd <- system.file("Bpd.txt", package = "iPRSue", mustWork = TRUE)
+  bpd <- system.file("Bpd_0_1.txt", package = "iPRSue", mustWork = TRUE)
   bpt <- system.file("Bpt.txt", package = "iPRSue", mustWork = TRUE)
   gd  <- system.file("Gd.txt",  package = "iPRSue", mustWork = TRUE)
   gt  <- system.file("Gt.txt",  package = "iPRSue", mustWork = TRUE)
@@ -64,6 +63,5 @@ Missing or non-estimable coefficients and variances are set to zero.
     max_iterations     = 100
   )
   head(results)
-}
 
 }

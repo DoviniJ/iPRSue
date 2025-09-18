@@ -32,12 +32,11 @@
 #' @importFrom stats binomial coef glm lm qnorm quantile rnorm var vcov
 #'
 #' @examples
-#' \donttest{
 #'   qpd <- system.file("Qpd.txt", package = "iPRSue", mustWork = TRUE)
 #'   qpt <- system.file("Qpt.txt", package = "iPRSue", mustWork = TRUE)
 #'   gd  <- system.file("Gd.txt",  package = "iPRSue", mustWork = TRUE)
 #'   gt  <- system.file("Gt.txt",  package = "iPRSue", mustWork = TRUE)
-#'
+#'  
 #'   results <- BLUE_estimates_QT(
 #'     discovery_pheno    = qpd,
 #'     discovery_geno_mat = gd,
@@ -46,7 +45,6 @@
 #'     significance_level = 0.05
 #'   )
 #'   head(results)
-#' }
 #'
 #' @export
 BLUE_estimates_QT <- function(discovery_pheno, 

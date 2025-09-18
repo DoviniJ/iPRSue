@@ -4,14 +4,21 @@
 \alias{GWAS_QT}
 \title{GWAS_QT function}
 \usage{
-GWAS_QT(discovery_pheno, discovery_geno_mat)
+GWAS_QT(plink_path, b_file, discovery_pheno, discovery_cov, thread = 20)
 }
 \arguments{
-\item{discovery_pheno}{Character. Path to the phenotype file. This file should be tab- or space-delimited,
-with no header, and the quantitative phenotype should be located in the third column.}
+\item{plink_path}{Path to the PLINK executable application}
 
-\item{discovery_geno_mat}{Character. Path to the genotype matrix file. This file should also be
-delimited with no header, and each column corresponds to a SNP (e.g., encoded as 0, 1, 2).}
+\item{b_file}{Prefix of the binary files, where all .fam, .bed and .bim files have a common prefix}
+
+\item{discovery_pheno}{Name (with file extension) of the phenotype file containing family ID, individual
+ID and phenotype of the discovery dataset as columns, without heading}
+
+\item{discovery_cov}{Name (with file extension) of the covariate file containing family ID, individual
+ID, and covariate(s) of the discovery dataset as columns, without heading. If no covariate is
+used, have a constant column (e.g. vector of 1s)}
+
+\item{thread}{Number of threads used (default = 20)}
 }
 \value{
 A data frame with two columns:
@@ -21,26 +28,24 @@ A data frame with two columns:
 }
 }
 \description{
-Performs univariate linear regression for each SNP to estimate effect sizes and standard errors
-in a genome-wide association study (GWAS) for a quantitative trait.
+Performs genome-wide association study (GWAS) using plink2 linear model and outputs
+the GWAS summary statistics with additive SNP effects (beta) and
+standard errors (se)
 }
 \details{
-The function uses linear regression (\code{lm}) to regress the quantitative phenotype on each SNP separately.
-The phenotype is standardized prior to analysis. No covariates are included in the model.
-The genotype matrix and phenotype vector are assumed to be ordered consistently.
+The function uses linear regression to regress the quantitative phenotype on each SNP separately
+using plink 2. Then the estimated effects and standard errors are adjusted for standardization.
+The phenotype is standardized prior to analysis. It is optional to employ covariates in the model. If no
+covariate is used, create your covariate file with a constant in the 3rd column (e.g. vector of 1s).
 }
 \examples{
-\donttest{
-  # Example usage:
-  # Phenotype file: 3rd column must contain a continuous outcome
-  # Genotype file: SNPs in columns, rows correspond to individuals
-
-  qpd <- system.file("Qpd.txt", package = "iPRSue", mustWork = TRUE)
-  gd  <- system.file("Gd.txt",  package = "iPRSue", mustWork = TRUE)
-
+\dontrun{
   results <- GWAS_QT(
-    discovery_pheno    = qpd,
-    discovery_geno_mat = gd
+    plink_path = "./plink2",
+    b_file = "./binary_file_prefix",
+    discovery_pheno = "./discovery_phenotype_file",
+    discovery_cov = "./discovery_covariate_file",
+    thread = 48
   )
   head(results)
 }

@@ -1,11 +1,18 @@
 #' GWAS_BT function
 #'
-#' Performs genome-wide association analysis for a binary trait using logistic regression.
-#' It reads a phenotype file and a genotype matrix, and estimates the SNP effect sizes and standard errors.
+#' Performs genome-wide association study (GWAS) using plink2 logistic model and outputs 
+#' the GWAS summary statistics with additive SNP effects (beta) and 
+#' standard errors (se)
 #'
-#' @param discovery_pheno A character string specifying the path to the phenotype file. The file should have no header and contain individual IDs, and the third column should contain the binary trait (0/1).
-#' @param discovery_geno_mat A character string specifying the path to the genotype matrix file. The file should have no header and contain numeric genotype data (e.g., 0, 1, 2) for each SNP.
-#'
+#' @param plink_path Path to the PLINK executable application
+#' @param b_file Prefix of the binary files, where all .fam, .bed and .bim files have a common prefix
+#' @param discovery_pheno Name (with file extension) of the phenotype file containing family ID, individual 
+#' ID and phenotype of the discovery dataset as columns, without heading
+#' @param discovery_cov Name (with file extension) of the covariate file containing family ID, individual 
+#' ID, and covariate(s) of the discovery dataset as columns, without heading. If no covariate is 
+#' used, have a constant column (e.g. vector of 1s)
+#' @param thread Number of threads used (default = 20)
+#' 
 #' @return A data frame with two columns:
 #' \describe{
 #'   \item{beta}{Estimated effect size (log odds) for each SNP.}
@@ -13,46 +20,69 @@
 #' }
 #'
 #' @details
-#' The function uses logistic regression (`glm` with `binomial(link="logit")`) to regress the binary phenotype on each SNP individually. The output includes only the regression coefficient and standard error for each SNP.
-#'
-#' @import data.table
+#' The function uses logistic regression to regress the binary phenotype (1/2 coding for controls/cases) 
+#' on each SNP separately using plink 2. Then the estimated effects and standard errors are adjusted 
+#' for standardization. It is optional to employ covariates in the model. If no covariate is used, 
+#' create your covariate file with a constant in the 3rd column (e.g. vector of 1s).
 #' 
-#' @importFrom stats binomial coef glm lm qnorm quantile rnorm var vcov
+#' @importFrom utils read.table
 #' 
 #' @examples
-#' \donttest{
-#'   # Phenotype file: 3rd column must contain binary outcome (0/1)
-#'   # Genotype file: SNPs in columns, rows correspond to individuals
-#'   # Run GWAS on a binary trait with discovery phenotype and genotype files
-#'
-#'   bpd <- system.file("Bpd.txt", package = "iPRSue", mustWork = TRUE)
-#'   gd  <- system.file("Gd.txt",  package = "iPRSue", mustWork = TRUE)
-#'
-#'   gwas_results <- GWAS_BT(
-#'     discovery_pheno    = bpd,
-#'     discovery_geno_mat = gd
+#' \dontrun{
+#'   results <- GWAS_BT(
+#'     plink_path = "./plink2",
+#'     b_file = "./binary_file_prefix",
+#'     discovery_pheno = "./discovery_phenotype_file",
+#'     discovery_cov = "./discovery_covariate_file",
+#'     thread = 48
 #'   )
 #'   head(gwas_results)
 #' }
 #'
 #' @export
-#' 
-GWAS_BT <- function(discovery_pheno, discovery_geno_mat){
-  
-  
-  phe <- fread(discovery_pheno, header=F)
-  y <- phe$V3
-  X_discovery <- fread(discovery_geno_mat, header=F)
-  df <- as.data.frame(cbind(y,X_discovery))
-  
-  beta <- c()
-  se <- c()
-  for(i in 1:ncol(X_discovery)){
-    m <- glm(y~df[,i+1], data=df, family=binomial(link="logit"))
-    beta[i] <- summary(m)$coefficients[2,1]
-    se[i] <- summary(m)$coefficients[2,2]
+GWAS_BT <- function(plink_path, b_file, discovery_pheno, discovery_cov, thread = 20){
+  os_name <- Sys.info()["sysname"]
+  if (startsWith(os_name, "Win")) {
+    slash <- paste0("\\")
+  } else {
+    slash <- paste0("/")
   }
-  
-  gwas <- as.data.frame(cbind(beta, se))
-  return(gwas)
+  cov_file <- read.table(discovery_cov)
+  n_confounders = ncol(cov_file) - 2
+  parameters <- 1:(n_confounders+1)
+  param_vec <- paste0(parameters, collapse = ", ")
+  runPLINK <- function(PLINKoptions = "") system(paste(plink_path, PLINKoptions))
+  log_file <- runPLINK(paste0(" --bfile ", b_file, 
+                              " --glm --pheno ", 
+                              discovery_pheno, 
+                              " --covar ", discovery_cov, 
+                              " --parameters ", param_vec, 
+                              " --allow-no-sex --threads ", 
+                              thread,
+                              " --out ", tempdir(), slash, "B_gwas"))
+  first_line <- readLines(paste0(tempdir(), slash, "B_gwas.PHENO1.glm.logistic.hybrid"), n = 1)
+  col_names <- strsplit(first_line, "\t")[[1]]
+  col_names[1] <- sub("#", "", col_names[1])
+  plink_output <- read.table(paste0(tempdir(), slash, "B_gwas.PHENO1.glm.logistic.hybrid"), skip = 1, col.names = col_names, sep = "\t")
+  filtered_output <- plink_output[(plink_output$TEST=="ADD"),]
+  filtered_output$OR = log(filtered_output$OR)
+  B_out.trd.sum <- filtered_output[c("CHROM", "POS", "ID", "REF", "ALT", "A1", "OBS_CT", "OR", colnames(filtered_output)[grep("^LOG", colnames(filtered_output))], "Z_STAT", "P")]
+  colnames(B_out.trd.sum) <- c("CHROM", "POS", "ID", "REF", "ALT", "A1", "OBS_CT", "BETA", "SE", "Z_STAT", "P")
+  rownames(B_out.trd.sum) <- NULL
+  gwas <- as.data.frame(B_out.trd.sum[c("BETA", "SE")])
+  runPLINK <- function(PLINKoptions = "") system(paste(plink_path, PLINKoptions))
+  log_file2 <- runPLINK(paste0(" --bfile ", b_file,
+                               " --freq --threads ",
+                               thread,
+                               " --out ", tempdir(), slash, "allelefreqs"))
+  first_line2 <- readLines(paste0(tempdir(), slash, "allelefreqs.afreq"), n = 1)
+  col_names2 <- strsplit(first_line2, "\t")[[1]]
+  col_names2[1] <- sub("#", "", col_names2[1])
+  plink_output2 <- read.table(paste0(tempdir(), slash, "allelefreqs.afreq"), , skip = 1, col.names = col_names2, sep = "\t")
+  filtered_output2 <- plink_output2$ALT_FREQS
+  tpq = 2*filtered_output2*(1-filtered_output2)
+  beta = gwas$BETA*sqrt(tpq)
+  se = gwas$SE*sqrt(tpq)
+  adj_gwas <- data.frame(beta, se)
+  return(adj_gwas)
 }

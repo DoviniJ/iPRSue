@@ -34,18 +34,22 @@
 #' @importFrom stats binomial coef glm lm qnorm quantile rnorm var vcov
 #'
 #' @examples
-#' \donttest{
-#'   bpd <- system.file("Bpd.txt", package = "iPRSue", mustWork = TRUE)
-#'   bpt <- system.file("Bpt.txt", package = "iPRSue", mustWork = TRUE)
-#'   gd  <- system.file("Gd.txt",  package = "iPRSue", mustWork = TRUE)
-#'   gt  <- system.file("Gt.txt",  package = "iPRSue", mustWork = TRUE)
-#'
+#' \dontrun{
 #'   # Step 1: Run GWAS on binary trait
-#'   gwas_res <- GWAS_BT(discovery_pheno = bpd, discovery_geno_mat = gd)
-#'
+#'   results <- GWAS_BT(
+#'     plink_path = "./plink2",
+#'     b_file = "./binary_file_prefix",
+#'     discovery_pheno = "./discovery_phenotype_file",
+#'     discovery_cov = "./discovery_covariate_file",
+#'     thread = 48
+#'   )
+#'   
 #'   # Step 2: Estimate individual PRS with uncertainty
+#'   bpt <- system.file("Bpt.txt", package = "iPRSue", mustWork = TRUE)
+#'   gt  <- system.file("Gt.txt",  package = "iPRSue", mustWork = TRUE)
+#'   
 #'   prs_estimates <- iPRSue_estimates_BT(
-#'     gwas              = gwas_res,
+#'     gwas              = results,
 #'     target_pheno      = bpt,
 #'     target_geno_mat   = gt,
 #'     no_of_PRSs        = 500,
