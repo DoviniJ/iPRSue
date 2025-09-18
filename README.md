@@ -38,30 +38,43 @@ library(iPRSue)
 1) Qpd.txt - This is a .txt file which contains the following columns in order. The discovery dataset has 800 individuals. Note that the file has no column headings.
 * family ID (FID) 
 * individual ID (IID)  
-* quantitative phenotype of the discovery sample
+* scaled quantitative phenotype of the discovery sample
 
 ```
-ID_1 ID_1 31.6534
-ID_2 ID_2 25.5035
-ID_3 ID_3 26.7391
-ID_4 ID_4 25.5271
-ID_5 ID_5 26.7165
+ID_1 ID_1 0.967866365493657
+ID_2 ID_2 -0.401199467463008
+ID_3 ID_3 -0.1261351992308
+ID_4 ID_4 -0.395945731035134
+ID_5 ID_5 -0.131166319708339
 ```
 
 2) Qpt.txt - This is a .txt file which contains the following columns in order. The target dataset has 200 individuals who are independent from the discovery dataset. Note that the file has no column headings.   
 * FID 
 * IID  
-* quantitative phenotype of the target sample - optional
+* scaled quantitative phenotype of the target sample - optional
 
 ```
-ID_801 ID_801 26.5723
-ID_802 ID_802 20.2632
-ID_803 ID_803 27.7365
-ID_804 ID_804 18.75
-ID_805 ID_805 23.3025
+ID_801 ID_801 -0.111301037986145
+ID_802 ID_802 -1.43931139178665
+ID_803 ID_803 0.133752876818589
+ID_804 ID_804 -1.75782675330745
+ID_805 ID_805 -0.799565331602807
 ```
 
 3) Bpd.txt - This is a .txt file which contains the following columns in order. The discovery dataset has 800 individuals. Note that the file has no column headings.
+* FID 
+* IID  
+* binary phenotype (1=controls, 2=cases) of the discovery sample
+
+```
+ID_1 ID_1 1
+ID_2 ID_2 2
+ID_3 ID_3 1
+ID_4 ID_4 1
+ID_5 ID_5 1
+```
+
+4) Bpd_0_1.txt - This is a .txt file which contains the following columns in order. The discovery dataset has 800 individuals. Note that the file has no column headings.
 * FID 
 * IID  
 * binary phenotype (0=controls, 1=cases) of the discovery sample
@@ -74,25 +87,59 @@ ID_4 ID_4 0
 ID_5 ID_5 0
 ```
 
-4) Bpt.txt - This is a .txt file which contains the following columns in order. The target dataset has 200 individuals who are independent from the discovery dataset. Note that the file has no column headings.   
+5) Bpt.txt - This is a .txt file which contains the following columns in order. The target dataset has 200 individuals who are independent from the discovery dataset. Note that the file has no column headings.   
 * FID 
 * IID  
-* binary phenotype (0=controls, 1=cases) of the target sample - optional
+* binary phenotype (1=controls, 2=cases) of the target sample - optional
 
 ```
-ID_801 ID_801 0
-ID_802 ID_802 1
-ID_803 ID_803 0
-ID_804 ID_804 0
-ID_805 ID_805 1
+ID_801 ID_801 1
+ID_802 ID_802 2
+ID_803 ID_803 1
+ID_804 ID_804 1
+ID_805 ID_805 2
 ```
 
-5) Gd.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension discovery_sample_size x number_of_snps (e.g. 800 x 100), of the discovery individuals. Note that the file has neither row nor column headings.
+6) Gd.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension discovery_sample_size x number_of_snps (e.g. 800 x 1,000), of the discovery individuals. Note that the file has neither row nor column headings.
    
-6) Gt.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension target_sample_size x number_of_snps (e.g. 200 x 100), of the target individuals. Note that the file has neither row nor column headings.
+7) Gt.txt - This is a .txt file which contains scaled (column standardized) genotype matrix with the dimension target_sample_size x number_of_snps (e.g. 200 x 1,000), of the target individuals. Note that the file has neither row nor column headings.
+
+8) mydata.fam - This is a file associated with the PLINK binary format file which contains the following columns in order. The example dataset has 1,000 individuals. Note that the file has no column headings. This follows the PLINK .fam file format.
+* family ID (FID) 
+* individual ID (IID) 
+* father's ID 
+* mother's ID 
+* sex 
+* phenotype value
+
+```
+ID_1 ID_1 0 0 1 -9
+ID_2 ID_2 0 0 2 -9
+ID_3 ID_3 0 0 2 -9
+ID_4 ID_4 0 0 2 -9
+ID_5 ID_5 0 0 1 -9
+```
+  
+9) mydata.bim - This is is a file associated with the PLINK binary format file which contains the following columns in order. The example dataset has 1,000 SNPs. Note that the file has no column headings. This follows the PLINK .bim file format.
+* chromosome code 
+* SNP ID 
+* position of centimorgans 
+* base-pair coordinate 
+* minor allele  
+* reference allele 
+
+```
+1	SNP_1	0	768448	A	G
+1	SNP_2	0	853954	C	A
+1	SNP_3	0	880390	A	C
+1	SNP_4	0	940203	A	G
+1	SNP_5	0	987670	T	G
+```
+
+10) mydata.bed - This is the PLINK binary format file which includes genotype information. This follows the PLINK .bed file format.
 
 ## Quick start (tutorial)
-Download all the above example data files from inst folder to your working directory. Follow the commands below to obtain the expected outputs. Once practiced, you may use your own data files to generate individual PRS confidence intervals by using either the novel method iPRSue or the BLUE method.
+Download all the above example data files from inst folder to your working directory. You can copy the path to inst folder () and download the directory using https://download-directory.github.io/ page, for instant downloading. Follow the commands below to obtain the expected outputs. Once practiced, you may use your own data files to generate individual PRS confidence intervals by using either the novel method iPRSue or the BLUE method.
 
 ## Output files
 #### When the outcome variable is quantitative,
