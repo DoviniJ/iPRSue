@@ -37,9 +37,10 @@ library(iPRSue)
 The package iPRSue depends on the following R packages. Please install them and call the respective libraries.
 
 ```
-install.packages(c("data.table", "bigstatsr"))
+install.packages(c("data.table", "bigstatsr", "logistf"))
 library(data.table)
 library(bigstatsr)
+library(logistf)
 ```
 
 ## Input files
