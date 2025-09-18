@@ -1,7 +1,7 @@
-# iPRSue (Page under construction - please use CRAN)
+# iPRSue
 ---
 
-Version: xxx
+Version: 1.0.0
 
 Authors: Dovini Jayasinghe and S. Hong Lee
 
