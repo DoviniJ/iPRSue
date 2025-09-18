@@ -202,7 +202,9 @@ _Note that, all these files (user's own data files) can be placed in a separate 
 x <- GWAS_QT(plink_path = "plink2", b_file = "mydata", discovery_pheno = "Qpd.txt", discovery_cov = "cd.txt", thread = 48)
 y <- iPRSue_estimates_QT(gwas = x, target_pheno = "Qpt.txt", target_geno_mat = "Gt.txt", no_of_PRSs = 500, significance_level = 0.05, seed = set.seed(1))
 ```
-The arguments of ```GWAS_QT()``` function, namely, ```discovery_pheno``` and ```discovery_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the discovery dataset. The function ```iPRSue_estimates()``` use the estimated values from ```GWAS_QT()``` function as an input to the argument ```gwas```. Moreover, ```target_pheno``` and ```target_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the target dataset. The no_of_PRSs specifies the size of the PRS distribution per target individual (default is 500), significance_level sets the level of significance for constructing PRS confidence intervals (default is 0.05), and seed is used to control random number generation for reproducibility (default is NULL).
+In ```GWAS_QT()```, ```plink_path``` is the path or executable name for PLINK2 (e.g., “plink2”); ```b_file``` is the prefix of the PLINK binary set (.bed/.bim/.fam) that defines the SNPs and discovery sample IDs; ```discovery_pheno``` provides the scaled quantitative phenotype file for the discovery sample, and ```discovery_cov``` supplies the matching covariate file (for example, sex and principal components), with IDs consistent with those in ```b_file```; ```thread``` specifies the number of CPU threads to use (optional, default 20). The function runs linear-regression GWAS and returns additive SNP effect estimates and their standard errors, ordered exactly as in the corresponding .bim file.
+
+In ```iPRSue_estimates_QT()```, ```gwas``` is the GWAS results object produced by ```GWAS_QT()```. The ```target_pheno``` argument points to the target sample’s quantitative phenotype file, while ```target_geno_mat``` is a text file containing the scaled target genotype matrix aligned to the GWAS SNP order. The argument ```no_of_PRSs``` sets the number of PRS draws/replicates used internally for uncertainty estimation, ```significance_level``` is the alpha level for confidence intervals (e.g., 0.05 for 95% CIs), and ```seed``` fixes the random seed for reproducibility. Using these inputs, the function computes iPRSue point estimates together with uncertainty metrics for each target individual.
 
 **Outputs**
 ```
@@ -236,7 +238,6 @@ Returns the dataframe ```y``` with following columns:
 * y$Lower_Limit : Lower limit of the individual PRS confidence interval
 * y$Upper_Limit : Lower limit of the individual PRS confidence interval
 
-TO BE CONTINUED AFTER TEA FROMM HERE .................................................................
 
 **Command**
 ```
