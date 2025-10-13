@@ -331,9 +331,11 @@ Returns the dataframe ```z``` with following columns:
 
 
 ## $\color{red} {IMPORTANT}$
-We recommend producing GWAS summary statistics using scaled genotypes when applying iPRSue method. If the users have access to readily-available GWAS summary statistics which are produced using unscaled genotypes, make sure to conduct necessary adjustments to those SNP effects ($beta$) and corresponding standard errors ($se$). 
+Publicly available GWAS summary statistics often include only the \(p\)-value. In such cases, before applying iPRSue, one can derive the \(Z\)-statistic ($Z_i$) assuming a standard normal distribution, and then compute the standard error as $\hat\sigma_i^{(\mathrm{scaled})} = 1/\sqrt{n_{\text{eff}}}$ and effect size as $\hat\beta_i^{(\mathrm{scaled})} = Z_i/\sqrt{n_{\text{eff}}}$, where $n_{\text{eff}}$ corresponds to the total effective sample size of the discovery cohort.
 
 <!-- 
+We recommend producing GWAS summary statistics using scaled genotypes when applying iPRSue method. If the users have access to readily-available GWAS summary statistics which are produced using unscaled genotypes, make sure to conduct necessary adjustments to those SNP effects ($beta$) and corresponding standard errors ($se$). 
+
 The adjustment can be done using minor allele frequency ($p$) or effective sample size ($n$) information as follows (ref. 1, 2):
 * $beta_{adjusted} = beta . \sqrt{2p(1-p)}$
 * $se_{adjusted} = se . \sqrt{2p(1-p)}$ 
@@ -355,12 +357,11 @@ The adjustment can be done using effective sample size ($n$) information as foll
 
 ### Reference
 1) https://github.com/euffelmann/bpc
--->
 
 The adjustment can be done using minor allele frequency ($p$) information as follows:
 * $beta_{adjusted} = beta . \sqrt{2p(1-p)}$
 * $se_{adjusted} = se . \sqrt{2p(1-p)}$
-
+-->
    
 ## Contact
 dovini.jayasinghe@mymail.unisa.edu.au
