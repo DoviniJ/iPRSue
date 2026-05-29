@@ -113,14 +113,14 @@ ID_805 ID_805 2
 6) cd.txt - This is a .txt file which contains the following columns in order. The discovery dataset has 800 individuals. Note that the file has no column headings.    
 * FID 
 * IID 
-* 16 confounders of the discovery sample (Note: These columns are optional (at least 1 column is required). Can use any number of columns as confounders to adjust the phenotype upon user requirement.)
+* 14 confounders of the discovery sample (Note: These columns are optional (at least 1 column is required). Can use any number of columns as confounders to adjust the phenotype upon user requirement.)
 
 ```
-ID_1 ID_1 0.787403812314451 0.620004763647331 -3.04026 45 -12.048 2.17634 -0.940322 -0.446351 -5.45685 -2.53161 -2.13435 -1.95623 -3.82792 -0.380636 0 10
-ID_2 ID_2 -0.119722138532781 0.0143333904548625 -5.1054 64 -14.5169 6.01889 -3.85803 3.62625 5.10717 -3.54574 0.393994 3.64275 4.42975 -2.26704 1 19
-ID_3 ID_3 0.173372721351375 0.0300581005087816 -1.91044 59 -12.7462 5.95244 0.0738914 1.80523 4.76284 0.130369 -1.05615 0.316777 0.988783 -1.76502 1 7
-ID_4 ID_4 -0.699321184695051 0.48905011936329 -1.83526 68 -10.3349 4.71264 -1.84521 -0.524855 -3.80275 0.837965 0.265233 2.10903 -0.210259 0.71504 0 20
-ID_5 ID_5 3.69300366651739 13.6382760809109 -3.15649 69 -8.56737 4.78248 -1.49547 -7.49413 -5.39887 1.85316 4.07476 1.05351 0.825942 -2.09669 1 20
+ID_1 ID_1 -0.715681209642834 0.888725964414309 -1.03170535509313 1.13144382806602 0.974586116983568 1.44600211115777 0.231213420238433 -1.15908518979155 -0.260237749851626 -0.981928033025326 0.232145395698731 -0.00493421851594367 -1.02467943705236 -1.38309046960338
+ID_2 ID_2 0.833805005322291 1.14151912762549 0.902862549695279 -1.09287371734997 0.382828629498391 -0.551686839383708 -0.285874699239703 1.87146117182544 0.0618826065454539 1.47080223642316 -0.487027551176616 -0.522925465187803 0.974695074269322 1.10982822777533
+ID_3 ID_3 0.536893785388661 -0.248843270036006 1.568876367973 -0.396628752413828 -0.370603810588219 1.84225473719443 1.78102440765412 1.97939010218386 -0.790320886262911 0.593568016724195 0.678954789531668 -2.07574875557482 0.974695074269322 -0.807801539439061
+ID_4 ID_4 2.95462492768725 -1.26001592288073 1.98375887378537 -1.85436124493203 -0.610043439191099 -0.0590784765825099 -0.358218902818925 1.47235715582949 -0.21521644298211 0.56767247164066 0.0320535549435434 0.617574422540434 0.974695074269322 1.10982822777533
+ID_5 ID_5 0.0571302091333667 0.256743056386356 -0.364665321378934 -1.63324675483113 -0.185694458411861 0.0654274876199731 -0.903197651489459 -1.5774423323997 -1.72217861845979 -0.725173364377149 1.41905617836277 0.825306062484362 0.974695074269322 1.10982822777533
 ```
 Note: If you have no confounder, then leave the 3rd column constant (e.g. vector of 1s)
 
@@ -200,7 +200,7 @@ _Note that, all these files (user's own data files) can be placed in a separate 
 #### When the outcome variable is quantitative,
 **Commands**
 ```
-x <- GWAS_QT(plink_path = "plink2", b_file = "mydata", discovery_pheno = "Qpd.txt", discovery_cov = "cd.txt", thread = 48)
+x <- GWAS_QT(plink_path = "plink2", b_file = "mydata", discovery_pheno = "Qpd.txt", discovery_cov = "cd1.txt", thread = 48)
 y <- iPRSue_estimates_QT(gwas = x, target_pheno = "Qpt.txt", target_geno_mat = "Gt.txt", no_of_PRSs = 500, significance_level = 0.05, seed = set.seed(1))
 ```
 In ```GWAS_QT()```, ```plink_path``` is the path or executable name for PLINK2 (e.g., “plink2”); ```b_file``` is the prefix of the PLINK binary set (.bed/.bim/.fam) that defines the SNPs and discovery sample IDs; ```discovery_pheno``` provides the scaled quantitative phenotype file for the discovery sample, and ```discovery_cov``` supplies the matching covariate file (for example, sex and principal components), with IDs consistent with those in ```b_file```; ```thread``` specifies the number of CPU threads to use (optional, default 20). The function runs linear-regression GWAS and returns additive SNP effect estimates and their standard errors, ordered exactly as in the corresponding .bim file.
@@ -267,7 +267,7 @@ Returns the dataframe ```z``` with following columns:
 #### When the outcome variable is binary,
 **Commands**
 ```
-x <- GWAS_BT(plink_path = "plink2", b_file = "mydata", discovery_pheno = "Bpd.txt", discovery_cov = "cd.txt", thread = 48)
+x <- GWAS_BT(plink_path = "plink2", b_file = "mydata", discovery_pheno = "Bpd.txt", discovery_cov = "cd1.txt", thread = 48)
 y <- iPRSue_estimates_BT(gwas = x, target_pheno = "Bpt.txt", target_geno_mat = "Gt.txt", no_of_PRSs = 500, significance_level = 0.05, seed = set.seed(1))
 ```
 The arguments of ```GWAS_BT()``` function, namely, ```discovery_pheno``` and ```discovery_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the discovery dataset. The function ```iPRSue_estimates()``` use the estimated values from ```GWAS_BT()``` function as an input to the argument ```gwas```. Moreover, ```target_pheno``` and ```target_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the target dataset. The no_of_PRSs specifies the size of the PRS distribution per target individual (default is 500), significance_level sets the level of significance for constructing PRS confidence intervals (default is 0.05), and seed is used to control random number generation for reproducibility (default is NULL).
