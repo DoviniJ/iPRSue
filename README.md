@@ -200,7 +200,7 @@ _Note that, all these files (user's own data files) can be placed in a separate 
 #### When the outcome variable is quantitative,
 **Commands**
 ```
-x <- GWAS_QT(plink_path = "plink2", b_file = "mydata", discovery_pheno = "Qpd.txt", discovery_cov = "cd1.txt", thread = 48)
+x <- GWAS_QT(plink_path = "plink2", b_file = "mydata", discovery_pheno = "Qpd.txt", discovery_cov = "cd.txt", thread = 48)
 y <- iPRSue_estimates_QT(gwas = x, target_pheno = "Qpt.txt", target_geno_mat = "Gt.txt", no_of_PRSs = 500, significance_level = 0.05, seed = set.seed(1))
 ```
 In ```GWAS_QT()```, ```plink_path``` is the path or executable name for PLINK2 (e.g., “plink2”); ```b_file``` is the prefix of the PLINK binary set (.bed/.bim/.fam) that defines the SNPs and discovery sample IDs; ```discovery_pheno``` provides the scaled quantitative phenotype file for the discovery sample, and ```discovery_cov``` supplies the matching covariate file (for example, sex and principal components), with IDs consistent with those in ```b_file```; ```thread``` specifies the number of CPU threads to use (optional, default 20). The function runs linear-regression GWAS and returns additive SNP effect estimates and their standard errors, ordered exactly as in the corresponding .bim file.
@@ -267,7 +267,7 @@ Returns the dataframe ```z``` with following columns:
 #### When the outcome variable is binary,
 **Commands**
 ```
-x <- GWAS_BT(plink_path = "plink2", b_file = "mydata", discovery_pheno = "Bpd.txt", discovery_cov = "cd1.txt", thread = 48)
+x <- GWAS_BT(plink_path = "plink2", b_file = "mydata", discovery_pheno = "Bpd.txt", discovery_cov = "cd.txt", thread = 48)
 y <- iPRSue_estimates_BT(gwas = x, target_pheno = "Bpt.txt", target_geno_mat = "Gt.txt", no_of_PRSs = 500, significance_level = 0.05, seed = set.seed(1))
 ```
 The arguments of ```GWAS_BT()``` function, namely, ```discovery_pheno``` and ```discovery_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the discovery dataset. The function ```iPRSue_estimates()``` use the estimated values from ```GWAS_BT()``` function as an input to the argument ```gwas```. Moreover, ```target_pheno``` and ```target_geno_mat``` should be the text file names of phenotype and scaled genotype matrix for the individuals in the target dataset. The no_of_PRSs specifies the size of the PRS distribution per target individual (default is 500), significance_level sets the level of significance for constructing PRS confidence intervals (default is 0.05), and seed is used to control random number generation for reproducibility (default is NULL).
